@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django import forms
 
-# inherit from base User class and override it and make our own 
+# inherit from base form class and override it and make our own 
 class UserForm(forms.ModelForm):
     # we want the password characters to be hidden
     password = forms.CharField(widget=forms.PasswordInput)

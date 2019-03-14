@@ -43,14 +43,37 @@ class UserFormView(View):
     form_class = UserForm
     template_name = 'music/registration_form.html'
 
-    # whenever the user calls the form and it's a get request, go here and display a blank form
+    # whenever the user calls the form it's a get request, go here and display a blank form
     def get(self, request):
-        form = self.form_class(None)# no data by default
+        form = self.form_class(None)# no data by default in the blank form
         return render(request, self.template_name, {'form': form})
     
+    # process form data
     def post(self, request):
-        pass
+        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
 
+        if form.is_valid():
+            user = form.save(commit=False) # create an object from the form, but don't save the form's data to the database yet
+
+            # cleaned (normalized) data
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user.set_password(password)
+            user.save()# now save them to the database
+
+            # returns User onjects if credentials are correct
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    # request.user.username
+                    # now redirect them to a page after login
+                    return redirect('music:index')
+                    
+        # if it doesn't work, have them try again
+        return render(request, self.template_name, {'form': form})
+        
 
 
 

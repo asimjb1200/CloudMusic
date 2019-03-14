@@ -7,6 +7,8 @@ app_name = 'music'
 urlpatterns = [
     # /music/ - This url pattern will be under the name "IndexView"
     url(r'^$', views.IndexView.as_view(), name='index'), 
+
+    url(r'^register/$', views.UserFormView.as_view(), name='register'),
     
     # /music/<pk>/ - the number in the url will be saved as <pk> and we'll pass it to the DetailsView class in views
     url(r'^(?P<pk>[0-9]+)/$', views.DetailsView.as_view(), name='detail'), # detail will be the name of this url pattern
