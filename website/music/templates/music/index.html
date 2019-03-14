@@ -1,0 +1,35 @@
+{% extends 'music/base.html' %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+            {% for album in all_albums %} 
+            
+                <div class="card col-md-4">
+                    <a href="{% url 'music:detail' album.id %}">
+                        <img src="{{ album.album_logo.url }}" height="300px", class="card-img-top img-responsive" /><br/>
+                    </a>
+                    <div class="card-body" >
+                        <h5 class="text-muted">{{ album.album_title }}</h6>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <form method="get" action="{% url 'music:detail' album.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary fa fa-eye" style="border-radius: 7px;">&nbsp;</button>
+                                </form>
+                                <form method="get" action="{% url 'music:album-update' album.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary fa fa-pencil" style="border-radius: 7px;">&nbsp;</button>
+                                </form>
+                                <form method="post" action="{% url 'music:album-delete' album.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary fa fa-trash">&nbsp;</button>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+  
+      {% endfor %}
+    </div>
+</div>
+
+{% endblock body %}

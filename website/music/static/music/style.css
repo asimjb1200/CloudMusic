@@ -1,0 +1,15 @@
+body{
+    background: whitesmoke;
+}
+
+.navbar{
+    border-radius: 0;
+}
+
+.nav-item{
+    font-size: 1.5em;
+}
+
+.navbar-brand{
+    font-family: 'Satisfy', cursive;
+}

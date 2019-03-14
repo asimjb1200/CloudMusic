@@ -1,0 +1,29 @@
+{% extends 'music/base.html' %}
+{% block title %}Album Details{% endblock %}
+
+{% block body %}
+
+<div class="card text-center" style="width: 100%;">
+  <img class="card-img-top" src="{{ album.album_logo.url }}" style='height: 300px;' alt="Album Logo">
+  <div class="card-body">
+    <h5 class="card-title">{{ album.album_title }}</h5>
+  </div>
+  <ul class="list-group list-group-flush">
+    {% for song in album.song_set.all %}
+    {% if song.is_favorite %}
+      <li class="list-group-item fa fa-star">{{ song.song_title }}</li>
+        {% else %}
+          <li class="list-group-item">{{ song.song_title }}</li>
+        {% endif %}
+        <br>
+        {% endfor %}
+  </ul>
+  <div class="card-body">
+    <a href="#" class="card-link fa fa-plus-circle">&nbsp; Add Song</a>
+    <form method="post" action="{% url 'music:album-delete' album.id %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary fa fa-trash">&nbsp;</button>
+    </form>
+  </div>
+</div>
+{% endblock body %}
